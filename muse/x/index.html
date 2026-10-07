@@ -64,9 +64,9 @@ ol li{margin-bottom:8px}
 
 <script>
 const SOURCE = "x";
-const ENDPOINT = "https://script.google.com/macros/s/__PENDING__/exec";
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbzG-97chLnI6XCMDk3ryfA7wNyKOylechqGn1ATW2jonTlM7lkLVxBHLyW3zk8Oy3cQKw/exec";
 function cid(){try{let v=localStorage.getItem('muse_cid');if(!v){v=Math.random().toString(36).slice(2,10)+Date.now().toString(36);localStorage.setItem('muse_cid',v);}return v;}catch(e){return 'na';}}
-function log(ev){try{const body=JSON.stringify({event:ev,source:SOURCE,cid:cid(),ref:(document.referrer||'').slice(0,200),t:new Date().toISOString()});if(navigator.sendBeacon){navigator.sendBeacon(ENDPOINT,new Blob([body],{type:'text/plain'}));}else{fetch(ENDPOINT,{method:'POST',mode:'no-cors',body:body});}}catch(e){}}
+function log(ev){try{const body=JSON.stringify({event:ev,source:SOURCE,cid:cid(),ref:(document.referrer||'').slice(0,200),ua:(navigator.userAgent||'').slice(0,150),t:new Date().toISOString()});if(navigator.sendBeacon){navigator.sendBeacon(ENDPOINT,new Blob([body],{type:'text/plain'}));}else{fetch(ENDPOINT,{method:'POST',mode:'no-cors',body:body});}}catch(e){}}
 log('landing_view');
 document.getElementById('copy').addEventListener('click',function(){
   const c=document.getElementById('code').textContent.trim();
