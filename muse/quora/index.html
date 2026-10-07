@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Muse — we both get 1B tokens</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--bg:#0d0f12;--fg:#e8eaed;--mut:#9aa0a6;--acc:#7c5cff;--card:#161a20;--brd:#252a33}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;display:flex;justify-content:center;padding:48px 20px}
+main{width:100%;max-width:640px}
+.eyebrow{color:var(--acc);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 8px}
+h1{font-size:30px;line-height:1.25;margin:0 0 12px;letter-spacing:-.02em}
+.lede{color:var(--mut);margin:0 0 28px;font-size:17px}
+.code-box{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:14px 16px;margin-bottom:24px}
+#code{font:600 22px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em;flex:1}
+button{background:var(--acc);color:#fff;border:0;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:600;cursor:pointer}
+button.ghost{background:transparent;border:1px solid var(--brd);color:var(--fg);width:100%;padding:12px;margin-top:8px}
+button:active{transform:translateY(1px)}
+ol{padding-left:20px;margin:0 0 26px}
+ol li{margin-bottom:8px}
+.cta{display:block;text-align:center;background:var(--acc);color:#fff;text-decoration:none;font-weight:600;padding:14px;border-radius:10px;margin-bottom:32px}
+.notes{background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:20px}
+.notes h2{font-size:14px;text-transform:uppercase;letter-spacing:.1em;color:var(--mut);margin:0 0 12px}
+.notes ul{padding-left:18px;margin:0;color:var(--mut);font-size:14px}
+.notes li{margin-bottom:10px}
+.notes b{color:var(--fg)}
+.footer{color:var(--mut);font-size:13px;margin-top:28px;text-align:center}
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">referral</p>
+  <h1>Muse — a personal AI agent</h1>
+  <p class="lede">I've been running Muse on real tasks at 2am. If you want to try it, use my code and we both get 1B tokens.</p>
+
+  <div class="code-box">
+    <code id="code">KJOLAC</code>
+    <button id="copy">Copy code</button>
+  </div>
+
+  <ol>
+    <li>Sign up for Muse.</li>
+    <li>Open <b>Settings</b> and enter <b>KJOLAC</b> — within 48 hours of joining.</li>
+    <li>You get 1B tokens. I get the same bonus.</li>
+  </ol>
+
+  <a class="cta" id="open-muse" href="https://muse.ai/join" target="_blank" rel="noopener">Open Muse →</a>
+
+  <section class="notes">
+    <h2>Before you click</h2>
+    <ul>
+      <li><b>Region:</b> Muse's public rollout is currently the <b>US</b>. Check eligibility in the app before signing up.</li>
+      <li><b>Disclosure:</b> KJOLAC is my referral code. If you redeem it, I receive the same 1B-token bonus. That's the only reason this page exists.</li>
+      <li><b>Honest bit:</b> I'm still testing it. Planning is solid; long multi-step runs still need a human check.</li>
+    </ul>
+  </section>
+
+  <button class="ghost" id="redeemed">I already entered the code ✓</button>
+
+  <p class="footer">김채율 · 새로 뜬 AI 툴을 새벽에 만져보는 사람</p>
+</main>
+
+<script>
+const SOURCE = "quora";
+const ENDPOINT = "https://script.google.com/macros/s/__PENDING__/exec";
+function cid(){try{let v=localStorage.getItem('muse_cid');if(!v){v=Math.random().toString(36).slice(2,10)+Date.now().toString(36);localStorage.setItem('muse_cid',v);}return v;}catch(e){return 'na';}}
+function log(ev){try{const body=JSON.stringify({event:ev,source:SOURCE,cid:cid(),ref:(document.referrer||'').slice(0,200),t:new Date().toISOString()});if(navigator.sendBeacon){navigator.sendBeacon(ENDPOINT,new Blob([body],{type:'text/plain'}));}else{fetch(ENDPOINT,{method:'POST',mode:'no-cors',body:body});}}catch(e){}}
+log('landing_view');
+document.getElementById('copy').addEventListener('click',function(){
+  const c=document.getElementById('code').textContent.trim();
+  if(navigator.clipboard){navigator.clipboard.writeText(c);}
+  this.textContent='Copied ✓';log('copy_code');
+});
+document.getElementById('open-muse').addEventListener('click',function(){log('open_muse');});
+document.getElementById('redeemed').addEventListener('click',function(){this.textContent='Recorded ✓';this.disabled=true;log('redeemed_report');});
+</script>
+
+</body>
+</html>
